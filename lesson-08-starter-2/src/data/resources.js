@@ -17,7 +17,7 @@ export const resources = [
     summary: 'Confidential mental health supports.',
     location: 'Virtual and in-person',
     openNow: true,
-    isVirtual: true, // Set to true for the exercise
+    isVirtual: true, 
     isPopular: false,
   },
   {
@@ -38,6 +38,6 @@ export const resources = [
     location: 'Library',
     openNow: true,
     isVirtual: false,
-    isPopular: true, // Set to true for the exercise
+    isPopular: true, 
   },
 ];
