@@ -1,7 +1,7 @@
 import Card from './ui/Card';
 
 // src/components/Details.jsx
-export default function Details({resource}) {
+export default function Details({ resource }) {
   return (
     <Card title="Resource Details">
       <div className="space-y-3 p-4">
@@ -12,16 +12,16 @@ export default function Details({resource}) {
 
         <dl className="grid grid-cols-12 gap-y-2 text-sm">
           <dt className="col-span-4 font-semibold text-gray-700">Category</dt>
-          <dd className="col-span-8 text-gray-600">Academic</dd>
+          <dd className="col-span-8 text-gray-600">{resource?.category}</dd>
 
           <dt className="col-span-4 font-semibold text-gray-700">Location</dt>
-          <dd className="col-span-8 text-gray-600">Building W, Room W101</dd>
+          <dd className="col-span-8 text-gray-600">{resource?.location}</dd>
 
           <dt className="col-span-4 font-semibold text-gray-700">Hours</dt>
-          <dd className="col-span-8 text-gray-600">Mon-Thu 10:00-16:00</dd>
+          <dd className="col-span-8 text-gray-600">{resource?.hours}</dd>
 
           <dt className="col-span-4 font-semibold text-gray-700">Contact</dt>
-          <dd className="col-span-8 text-gray-600">tutoring@nait.ca</dd>
+          <dd className="col-span-8 text-gray-600">{resource?.contact}</dd>
         </dl>
       </div>
 

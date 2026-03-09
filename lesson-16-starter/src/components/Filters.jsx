@@ -1,15 +1,16 @@
-
 import Card from './ui/Card';
-/*
-    searchTerm={searchTerm}
-    onSearchChange={setSearchTerm}
-    selectedCategories={selectedCategories}
-    onCategoryToggle={setSelectedCategories}
-    openNowOnly={openNowOnly}
-    onOpenNowChange={setOpenNowOnly
-*/ 
-export default function Filters({searchTerm,onSearchChange,selectedCategories,onCategoryToggle,openNowOnly,onOpenNowChange}) {
 
+// src/components/Filters.jsx
+export default function Filters({
+  searchTerm,
+  onSearchChange,
+  selectedCategories,
+  onCategoryToggle,
+  openNowOnly,
+  onOpenNowChange,
+  virtualOnly,
+  onVirtualOnlyChange,
+}) {
 
   function toggleCategory(category) {
     onCategoryToggle((prev) => {
@@ -23,6 +24,11 @@ export default function Filters({searchTerm,onSearchChange,selectedCategories,on
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    if (!searchTerm.trim() && selectedCategories.length === 0 && !openNowOnly) {
+      alert('Please select at least one filter option.');
+      return;
+    }
     console.log('Filters submitted');
   }
 
@@ -52,12 +58,12 @@ export default function Filters({searchTerm,onSearchChange,selectedCategories,on
           <div className="space-y-2">
             <div className="text-sm font-semibold text-gray-800">Category</div>
             <div className="flex flex-wrap gap-2" aria-label="Category filters">
-              {['All', 'Academic', 'Wellness', 'Financial', 'Tech'].map((label) => (
+              {['Academic', 'Wellness', 'Financial', 'Tech'].map((label) => (
                 <button
                   key={label}
                   type="button"
-                  className={`${selectedCategories.includes(label) && 'bg-sky-600 text-white'} rounded border border-sky-600 px-3 py-1 text-xs font-semibold text-sky-700 hover:bg-sky-50 hover:text-sky-900 focus:outline-none focus:ring-2 focus:ring-sky-200`}
-                  onClick={() => toggleCategory(label)}
+                  className={`${selectedCategories.includes(label.toLowerCase()) && 'bg-sky-600 text-white'} rounded border border-sky-600 px-3 py-1 text-xs font-semibold text-sky-700 hover:bg-sky-50 hover:text-sky-900 focus:outline-none focus:ring-2 focus:ring-sky-200`}
+                  onClick={() => toggleCategory(label.toLowerCase())}
                 >
                   {label}
                 </button>
@@ -74,7 +80,7 @@ export default function Filters({searchTerm,onSearchChange,selectedCategories,on
                 id="openNow"
                 className="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-600 accent-sky-600"
                 checked={openNowOnly}
-                onChange={(e) => setOpenNowOnly(e.target.checked)}
+                onChange={(e) => onOpenNowChange(e.target.checked)}
               />
               Open now
             </label>
@@ -85,6 +91,8 @@ export default function Filters({searchTerm,onSearchChange,selectedCategories,on
                 type="checkbox"
                 id="virtual"
                 className="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-600 accent-sky-600"
+                checked={virtualOnly}
+                onChange={(e) => onVirtualOnlyChange(e.target.checked)}
               />
               Virtual options
             </label>
@@ -100,7 +108,8 @@ export default function Filters({searchTerm,onSearchChange,selectedCategories,on
               onClick={() => {
                 onSearchChange('');
                 onCategoryToggle([]);
-                setOpenNowOnly(false);
+                onOpenNowChange(false);
+                onVirtualOnlyChange(false);
               }}
             >
               Reset
@@ -111,9 +120,6 @@ export default function Filters({searchTerm,onSearchChange,selectedCategories,on
             >
               Filter
             </button>
-            {/* <p className="text-sm">
-              Open now only: {openNowOnly ? 'Yes' : 'No'}
-            </p> */}
           </div>
         </form>
       </div>

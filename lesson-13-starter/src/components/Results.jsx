@@ -4,20 +4,49 @@ import ResultsItem from './ResultsItem';
 import { resources } from '../data/resources';
 import Card from './ui/Card';
 
-export default function Results() {
-  const [selectedResource, setSelectedResource] = useState(null);
+/* 
+          selectedResource={selectedResource}
+          onSelectResource={setSelectedResource}
+          searchTerm={searchTerm}
+          selectedCategories={selectedCategories}
+          openNowOnly={openNowOnly}
+*/
 
+export default function Results({selectedResource,onSelectResource,searchTerm,selectedCategories,
+  openNowOnly}) {
+
+/* 
+  {
+    id: 'tutoring',
+    title: 'Peer Tutoring Centre',
+    category: 'Academic',
+    summary: 'Drop-in tutoring and study support.',
+    location: 'Building W, Room W101',
+    openNow: true,
+  },
+*/
+
+let filteredResources = resources;  
+if (openNowOnly) {
+    filteredResources = resources.filter((element) => element.openNow === openNowOnly);
+}
+
+if (selectedCategories && selectedCategories.length > 0) {
+    filteredResources = filteredResources.filter((element) => 
+      selectedCategories.includes(element.category)
+    );
+}
   return (
     <Card title="Results">
       <ul className="divide-y divide-gray-200">
-        {resources.map((r) => (
+        {filteredResources.map((r) => (
           <ResultsItem
             key={r.id}
             title={r.title}
             category={r.category}
             summary={r.summary}
             location={r.location}
-            onClick={() => setSelectedResource(r)}
+            onClick={() => onSelectResource(r)}
             selected={selectedResource?.id === r.id}
           >
             {/* children: optional badge content */}
